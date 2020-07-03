@@ -1,10 +1,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CoreAPIDapper.Dtos;
 using CoreAPIDapper.Models;
-using CoreAPIDapper.Properties.Services.ServiceResponse;
+using CoreAPIDapper.ServiceResponse;
 
-namespace CoreAPIDapper.Properties.Services
+namespace CoreAPIDapper.Services
 {
      
 
@@ -15,19 +16,18 @@ namespace CoreAPIDapper.Properties.Services
             new Dealer{ DealerName="Avek",DealerNo=123}
         };
 
-        public async Task<ServiceResponse<List<Dealer>>> GetAllDealers() 
+        public async Task<ServiceResponse<List<GetDealerDto>>> IDealerService.GetAllDealers()
         {
-          ServiceResponse<List<Dealer>> serviceResponse = new ServiceResponse<List<Dealer>>();
+            ServiceResponse<List<GetDealerDto>> serviceResponse = new ServiceResponse<List<GetDealerDto>>();
           serviceResponse.Data= dealers;
           return serviceResponse;
-}
-        public async Task<ServiceResponse<Dealer>> GetDealerByDealerNo(int dealerNo)
+        }
+
+        public async Task<ServiceResponse<GetDealerDto>> IDealerService.GetDealerByDealerNo(int dealerNo)
         {
-           ServiceResponse<Dealer> serviceResponse = new ServiceResponse<Dealer>();
+             ServiceResponse<GetDealerDto> serviceResponse = new ServiceResponse<GetDealerDto>();
            serviceResponse.Data= dealers.FirstOrDefault(x=>x.DealerNo==dealerNo);
             return serviceResponse;
         }
-
-        
     }
 }

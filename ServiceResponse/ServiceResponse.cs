@@ -1,4 +1,4 @@
-namespace CoreAPIDapper.Properties.Services.ServiceResponse
+namespace CoreAPIDapper.ServiceResponse
 {
     public class ServiceResponse<T> 
     {

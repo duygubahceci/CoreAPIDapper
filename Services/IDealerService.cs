@@ -1,13 +1,13 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using CoreAPIDapper.Models;
-using CoreAPIDapper.Properties.Services.ServiceResponse;
+using CoreAPIDapper.Dtos;
+using CoreAPIDapper.ServiceResponse;
 
-namespace CoreAPIDapper.Properties.Services
+namespace CoreAPIDapper.Services
 {
     public interface IDealerService
     {
-          Task<ServiceResponse<List<Dealer>>> GetAllDealers();
-          Task<ServiceResponse<Dealer>> GetDealerByDealerNo(int dealerNo);
+          Task<ServiceResponse<List<GetDealerDto>>> GetAllDealers();
+          Task<ServiceResponse<GetDealerDto>> GetDealerByDealerNo(int dealerNo);
     }
 }

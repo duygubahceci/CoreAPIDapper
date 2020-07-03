@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CoreAPIDapper.Models;
-using CoreAPIDapper.Properties.Services;
+using CoreAPIDapper.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CoreAPIDapper.Controllers
