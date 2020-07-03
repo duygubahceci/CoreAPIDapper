@@ -1,2 +1,2 @@
 # CoreAPIDapper
-Simple C#, .net Core 3.1 with EF+Sql Server example
+Simple C#, .net Core 3.1 with Dapper+Sql Server example
