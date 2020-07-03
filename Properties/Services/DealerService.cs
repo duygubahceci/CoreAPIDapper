@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using CoreAPIDapper.Models;
+using CoreAPIDapper.Properties.Services.ServiceResponse;
 
 namespace CoreAPIDapper.Properties.Services
 {
@@ -12,15 +14,20 @@ namespace CoreAPIDapper.Properties.Services
             new Dealer{DealerNo=222,DealerName="Şensan"},
             new Dealer{ DealerName="Avek",DealerNo=123}
         };
-    
-        public List<Dealer> GetAllDealers()
+
+        public async Task<ServiceResponse<List<Dealer>>> GetAllDealers() 
         {
-           return dealers;
+          ServiceResponse<List<Dealer>> serviceResponse = new ServiceResponse<List<Dealer>>();
+          serviceResponse.Data= dealers;
+          return serviceResponse;
+}
+        public async Task<ServiceResponse<Dealer>> GetDealerByDealerNo(int dealerNo)
+        {
+           ServiceResponse<Dealer> serviceResponse = new ServiceResponse<Dealer>();
+           serviceResponse.Data= dealers.FirstOrDefault(x=>x.DealerNo==dealerNo);
+            return serviceResponse;
         }
 
-        public Dealer GetDealerByDealerNo(int dealerNo)
-        {
-            return dealers.FirstOrDefault(x=>x.DealerNo==dealerNo);
-        }
+        
     }
 }

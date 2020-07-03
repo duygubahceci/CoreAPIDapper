@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using CoreAPIDapper.Models;
 using CoreAPIDapper.Properties.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -18,14 +19,14 @@ namespace CoreAPIDapper.Controllers
 
         }
         [HttpGet("GetAll")]
-        public IActionResult Get()
+        public async Task<IActionResult> Get()
         {
-            return Ok(_dealerService.GetAllDealers());
+            return Ok(await _dealerService.GetAllDealers());
         }
         [HttpGet("{dealerNo}")]
-        public IActionResult GetSingle(int dealerNo)
+        public async Task<IActionResult> GetSingle(int dealerNo)
         {
-            return Ok(_dealerService.GetDealerByDealerNo(dealerNo));
+            return Ok(await _dealerService.GetDealerByDealerNo(dealerNo));
         }
     }
 }
