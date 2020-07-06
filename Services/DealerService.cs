@@ -1,10 +1,13 @@
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using CoreAPIDapper.Dtos;
 using CoreAPIDapper.Models;
 using CoreAPIDapper.ServiceResponse;
+using Dapper;
 
 namespace CoreAPIDapper.Services
 {
@@ -17,24 +20,73 @@ namespace CoreAPIDapper.Services
             new Dealer{ DealerName="Avek",DealerNo=123}
         };
 
+        private readonly string _connectionString;
+        private  IDbConnection _connection { get { return new SqlConnection(_connectionString); }}
+
         private readonly IMapper _mapper;
         public DealerService(IMapper mapper)
         {
             _mapper = mapper;
+            _connectionString = @"Data Source=.\sqlexpress; Initial Catalog=OrderManagement; Integrated Security=True";
 
         }
-    
+
+        public async Task<ServiceResponse<List<GetDealerDto>>> AddDealer(AddDealerDto newDealer)
+        {
+            ServiceResponse<List<GetDealerDto>> serviceResponse = new ServiceResponse<List<GetDealerDto>>();
+            Dealer dealer = _mapper.Map<Dealer>(newDealer);        
+        
+            using (IDbConnection dbConnection = _connection)
+            {
+                string query = @" INSERT INTO [dbo].[Dealer]
+                            ([DealerNo]
+                            ,[DealerName]
+                            ,[SearchName])
+                                  VALUES
+                            (@DealerNo
+                            ,@DealerName
+                            ,@SearchName)";
+
+                await dbConnection.ExecuteAsync(query, dealer);
+            }
+            serviceResponse.Data = GetAllDealers().Result.Data;
+            return serviceResponse;
+
+        }
+
         public async Task<ServiceResponse<List<GetDealerDto>>> GetAllDealers()
         {
             ServiceResponse<List<GetDealerDto>> serviceResponse = new ServiceResponse<List<GetDealerDto>>();
-            serviceResponse.Data =  dealers.Select(c =>_mapper.Map<GetDealerDto>(dealers)).ToList();
+           
+            using (IDbConnection dbConnection = _connection)
+            {
+                string query = @"SELECT [DealerNo]
+                                    ,[DealerName]
+                                    ,[SearchName]
+                                FROM [Dealer] (nolock)";
+
+                var dealers = await dbConnection.QueryAsync<Dealer>(query);
+                serviceResponse.Data = dealers.Select(x => _mapper.Map<GetDealerDto>(x)).ToList();    
+            }     
+            
             return serviceResponse;
         }
 
         public async Task<ServiceResponse<GetDealerDto>> GetDealerByDealerNo(int dealerNo)
         {
             ServiceResponse<GetDealerDto> serviceResponse = new ServiceResponse<GetDealerDto>();
-            serviceResponse.Data =_mapper.Map<GetDealerDto>(dealers.FirstOrDefault(x => x.DealerNo == dealerNo));
+
+            using (IDbConnection dbConnection = _connection)
+            {
+                string query = @"SELECT [DealerNo]
+                                    ,[DealerName]
+                                    ,[SearchName]
+                                FROM [Dealer] (nolock)
+                                where DealerNo=@DealerNo";
+
+                var dealer = await dbConnection.QueryFirstOrDefaultAsync<Dealer>(query, new{ @DealerNo = dealerNo });
+                serviceResponse.Data = _mapper.Map<GetDealerDto>(dealer);
+            }
             return serviceResponse;
         }
     }

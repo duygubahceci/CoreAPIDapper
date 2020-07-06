@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CoreAPIDapper.Dtos;
 using CoreAPIDapper.Models;
 using CoreAPIDapper.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -27,6 +28,13 @@ namespace CoreAPIDapper.Controllers
         public async Task<IActionResult> GetSingle(int dealerNo)
         {
             return Ok(await _dealerService.GetDealerByDealerNo(dealerNo));
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> Add(AddDealerDto newDealer )
+        {
+            return Ok(await _dealerService.AddDealer(newDealer));
         }
     }
 }

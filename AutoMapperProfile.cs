@@ -1,6 +1,6 @@
 using AutoMapper;
- using CoreAPIDapper.Models;
-  using CoreAPIDapper.Dtos;
+using CoreAPIDapper.Models;
+using CoreAPIDapper.Dtos;
 
  namespace CoreAPIDapper
  {
@@ -8,7 +8,8 @@ using AutoMapper;
      {
          public AutoMapperProfile()
          {
-         CreateMap<Dealer,GetDealerDto>();
+         CreateMap<Dealer,GetDealerDto>();   
+         CreateMap<AddDealerDto,Dealer>();
          }
      }
 

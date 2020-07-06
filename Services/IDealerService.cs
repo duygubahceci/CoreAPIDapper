@@ -9,5 +9,7 @@ namespace CoreAPIDapper.Services
     {
           Task<ServiceResponse<List<GetDealerDto>>> GetAllDealers();
           Task<ServiceResponse<GetDealerDto>> GetDealerByDealerNo(int dealerNo);
+
+          Task<ServiceResponse<List<GetDealerDto>>> AddDealer(AddDealerDto dealer);
     }
 }
