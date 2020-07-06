@@ -60,12 +60,10 @@ namespace CoreAPIDapper.Services
            
             using (IDbConnection dbConnection = _connection)
             {
-                string query = @"SELECT [DealerNo]
-                                    ,[DealerName]
-                                    ,[SearchName]
-                                FROM [Dealer] (nolock)";
-
-                var dealers = await dbConnection.QueryAsync<Dealer>(query);
+                var procedure = "fsp_get_Dealers";
+               
+               var dealers = dbConnection.QueryAsync<Dealer>(procedure, commandType: CommandType.StoredProcedure).Result;
+                          
                 serviceResponse.Data = dealers.Select(x => _mapper.Map<GetDealerDto>(x)).ToList();    
             }     
             
