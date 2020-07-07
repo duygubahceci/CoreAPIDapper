@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace CoreAPIDapper.Dtos
+﻿namespace CoreAPIDapper.Dtos
 {
     public class AddDealerDto
     {

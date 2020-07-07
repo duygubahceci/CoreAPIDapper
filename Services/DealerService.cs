@@ -62,7 +62,7 @@ namespace CoreAPIDapper.Services
             {
                 var procedure = "fsp_get_Dealers";
                
-               var dealers = dbConnection.QueryAsync<Dealer>(procedure, commandType: CommandType.StoredProcedure).Result;
+               var dealers = (dbConnection.QueryAsync<Dealer>(procedure, commandType: CommandType.StoredProcedure).Result);
                           
                 serviceResponse.Data = dealers.Select(x => _mapper.Map<GetDealerDto>(x)).ToList();    
             }     
